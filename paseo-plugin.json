@@ -1,0 +1,6 @@
+{
+  "id": "conversation-manager",
+  "name": "Conversation Manager",
+  "description": "Search, filter and batch archive conversations with age and per-project retention rules.",
+  "requirements": { "paseo": ">=0.11.4 <0.12.0" }
+}
