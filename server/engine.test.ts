@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { PaseoAgent, PaseoWorkspace } from "@getpaseo/client";
+import type { PluginHookContext, PluginLifecycleEvents, PluginServerContext, PluginTurnOutcome } from "@getpaseo/plugin/server";
+import contribute from "../index.server";
 import type { CleanupRule, Conversation, Filters } from "../shared/types";
 import { filterConversations, planCleanup } from "../shared/planner";
 import { CleanupEngine, type AutomationPreferences } from "./engine";
@@ -75,6 +77,41 @@ function engine(settings: AutomationPreferences | null = null) {
 }
 async function manualPreview(instance: CleanupEngine, api: ArchiveApi, ids: string[]) {
   return instance.preview(api, { selectedIds: ids, filters: ALL, rule: null });
+}
+
+for (const outcome of [
+  { kind: "completed" },
+  { kind: "failed", error: { message: "Provider failed" } },
+  { kind: "canceled", reason: "User stopped the turn" },
+] satisfies PluginTurnOutcome[]) {
+  test(`turn-ended hook only starts automatic cleanup for completed turns: ${outcome.kind}`, async (t) => {
+    const { api, state } = fake([workspace("old-conversation", 40, { activityAt: "2000-01-01T00:00:00.000Z" })]);
+    let settingsReads = 0;
+    let onTurnEnded!: (event: PluginLifecycleEvents["agent.turn_ended"], context: PluginHookContext) => void | Promise<void>;
+    const cleanup = contribute({
+      registerSettings: () => ({ read: async () => {
+        settingsReads++;
+        return { status: "ready", values: { automatic: true, rule: { olderThanDays: 30, keepPerProject: null }, projectIds: [] } };
+      } }),
+      handle: () => {},
+      on: (name: string, handler: typeof onTurnEnded) => {
+        assert.equal(name, "agent.turn_ended");
+        onTurnEnded = handler;
+        return () => {};
+      },
+    } as unknown as PluginServerContext);
+    t.after(cleanup);
+
+    const result = onTurnEnded({
+      agent: { id: "trigger-agent", workspaceId: "trigger-workspace", parentAgentId: null, provider: "codex", cwd: "/shared/project", title: "Trigger" },
+      turnId: "turn", outcome, timeline: [],
+    }, { paseo: api as PluginHookContext["paseo"], signal: new AbortController().signal });
+    assert.equal(result, undefined, "The hook must return without waiting for the archive batch");
+    // Drain the detached batch's resolved fake API calls before checking effects.
+    await new Promise<void>((resolve) => setImmediate(resolve));
+    assert.deepEqual(state.archived, outcome.kind === "completed" ? ["old-conversation"] : []);
+    if (outcome.kind !== "completed") assert.equal(settingsReads, 0);
+  });
 }
 
 test("search narrows candidates while keep N counts the complete project", () => {

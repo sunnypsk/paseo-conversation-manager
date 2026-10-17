@@ -12,7 +12,8 @@ export default function contribute(server: PluginServerContext) {
   server.handle(previewArchive, (input, { paseo }) => engine.preview(paseo, input));
   server.handle(executeArchive, ({ token }, { paseo }) => engine.start(paseo, token));
   server.handle(archiveRunStatus, ({ runId }) => engine.getRun(runId));
-  const unsubscribe = server.on("agent.turn_ended", (_event, { paseo }) => {
+  const unsubscribe = server.on("agent.turn_ended", (event, { paseo }) => {
+    if (event.outcome.kind !== "completed") return;
     // The API belongs to this plugin process. Release the hook promptly; a long
     // batch must not inherit the host's short hook-request deadline.
     void engine.runAutomatic(paseo).catch((error: unknown) => {
