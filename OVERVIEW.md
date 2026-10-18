@@ -1,4 +1,4 @@
-# Conversation Manager
+# Paseo Conversation Manager
 
 Adds a **Manage conversations** entry to the Paseo sidebar. Search and filter conversations, select individual items, and preview a batch archive. Retention rules can select conversations that have been inactive for a specified number of days or keep the most recently active conversations in each project.
 

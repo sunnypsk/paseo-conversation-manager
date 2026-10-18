@@ -17,7 +17,7 @@ export default function contribute(server: PluginServerContext) {
     // The API belongs to this plugin process. Release the hook promptly; a long
     // batch must not inherit the host's short hook-request deadline.
     void engine.runAutomatic(paseo).catch((error: unknown) => {
-      console.error("Conversation Manager automatic cleanup failed", error);
+      console.error("Paseo Conversation Manager automatic cleanup failed", error);
     });
   });
   return () => { engine.close(); unsubscribe(); };

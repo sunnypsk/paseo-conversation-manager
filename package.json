@@ -4,7 +4,14 @@
   "private": true,
   "description": "Search, filter and batch archive conversations with age and per-project retention rules.",
   "type": "module",
-  "files": ["paseo-plugin.json", "OVERVIEW.md", "index.client.tsx", "index.server.ts", "client/", "server/", "shared/"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunnypsk/paseo-conversation-manager.git"
+  },
+  "homepage": "https://github.com/sunnypsk/paseo-conversation-manager#readme",
+  "bugs": { "url": "https://github.com/sunnypsk/paseo-conversation-manager/issues" },
+  "keywords": ["paseo", "paseo-plugin", "conversations", "workspaces", "archive"],
+  "files": ["paseo-plugin.json", "OVERVIEW.md", "assets/", "index.client.tsx", "index.server.ts", "client/", "server/", "shared/"],
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test shared/*.test.ts server/*.test.ts"

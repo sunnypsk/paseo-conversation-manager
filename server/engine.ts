@@ -48,7 +48,7 @@ export class CleanupEngine {
     this.previews.clear();
   }
 
-  private assertOpen(): void { if (this.closed) throw new Error("Conversation Manager has stopped."); }
+  private assertOpen(): void { if (this.closed) throw new Error("Paseo Conversation Manager has stopped."); }
 
   async list(paseo: ArchiveApi) {
     this.assertOpen();

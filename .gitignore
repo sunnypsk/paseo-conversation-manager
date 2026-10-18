@@ -1,3 +1,24 @@
 node_modules/
 artifacts/
 *.tsbuildinfo
+.DS_Store
+*.log
+
+# Local credentials and agent configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+.npmrc
+.netrc
+.git-credentials
+.factory/
+.paseo/
+.aws/
+auth.v2.*
+credentials.json
+credentials.*.json
+*.pem
+*.key
+*.p12
+*.pfx
