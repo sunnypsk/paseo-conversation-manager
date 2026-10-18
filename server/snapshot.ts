@@ -1,10 +1,18 @@
 import { createHash } from "node:crypto";
-import type {
-  PaseoAgent, PaseoAgentListOptions, PaseoAgentListResult,
-  PaseoWorkspace, PaseoWorkspaceArchiveResult, PaseoWorkspaceListOptions, PaseoWorkspaceListResult,
-} from "@getpaseo/client";
+import type { PluginHandlerContext } from "@getpaseo/plugin/server";
 import type { Conversation } from "../shared/types";
 import { compareActivity } from "../shared/planner";
+
+// Derive SDK types through the host-provided plugin module so Git installs do
+// not need development dependencies for Paseo's import-boundary validation.
+type PaseoApi = PluginHandlerContext["paseo"];
+type PaseoWorkspaceListOptions = Parameters<PaseoApi["workspaces"]["list"]>[0];
+type PaseoWorkspaceListResult = Awaited<ReturnType<PaseoApi["workspaces"]["list"]>>;
+type PaseoWorkspaceArchiveResult = Awaited<ReturnType<PaseoApi["workspaces"]["archive"]>>;
+type PaseoWorkspace = PaseoWorkspaceListResult["entries"][number];
+type PaseoAgentListOptions = Parameters<PaseoApi["agents"]["list"]>[0];
+type PaseoAgentListResult = Awaited<ReturnType<PaseoApi["agents"]["list"]>>;
+type PaseoAgent = PaseoAgentListResult["entries"][number]["agent"];
 
 export interface ArchiveApi {
   workspaces: {

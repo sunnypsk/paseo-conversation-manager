@@ -1,6 +1,6 @@
 # Verification
 
-Release preparation for version 0.1.0 was checked on 2026-10-19 (Asia/Hong_Kong) with Node.js 22.14.0 and Paseo app/daemon 0.11.4. The declared supported range remains `>=0.11.4 <0.12.0`.
+Release preparation for version 0.1.1 was checked on 2026-10-19 (Asia/Hong_Kong) with Node.js 22.14.0 and Paseo app/daemon 0.11.4. The declared supported range remains `>=0.11.4 <0.12.0`.
 
 ## Automated checks
 
@@ -20,6 +20,10 @@ The actual React Native Web component was rendered with a real QueryClient, the 
 Verified English visible copy, search, manual selection, disabled protected rows, a two-item preview, fractional input rejection, an age-rule preview, and automatic cleanup off by default. Compact cleanup rules and automation settings fit without horizontal overflow. No browser page errors were observed.
 
 The sample-data harness cannot archive real workspaces. These results verify the rendered component and interactions; they are not physical iOS/Android device testing or a complete native Paseo UI journey.
+
+## Clean-source installation
+
+A clean GitHub installation of 0.1.0 exposed a type-only import of `@getpaseo/client` that could resolve only when development dependencies were present. Version 0.1.1 derives the same types through the host-provided `@getpaseo/plugin/server` module. Runtime behavior and archive protections are unchanged. The corrected source was copied without `node_modules` and installed on a separate temporary Paseo 0.11.4 daemon, where it reached `running` without installing development dependencies.
 
 ## Local Paseo runtime
 
