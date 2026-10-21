@@ -3,5 +3,5 @@
   "name": "Paseo Conversation Manager",
   "description": "Search, filter and batch archive conversations with age and per-project retention rules.",
   "media": ["assets/conversation-manager-desktop.png", "assets/conversation-manager-compact.png"],
-  "requirements": { "paseo": ">=0.11.4 <0.12.0" }
+  "requirements": { "paseo": ">=0.11.4" }
 }

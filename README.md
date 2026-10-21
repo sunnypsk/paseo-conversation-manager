@@ -6,11 +6,13 @@ A community Paseo plugin for searching, filtering and batch archiving conversati
 
 ## Installation
 
-Requires Paseo app and daemon `>=0.11.4 <0.12.0`. Install directly from the public GitHub repository:
+Requires Paseo app and daemon `>=0.11.4`. Compatibility has been checked on 0.11.4 and 0.12.0. Install directly from the public GitHub repository:
 
 ```sh
-paseo plugin add git:sunnypsk/paseo-conversation-manager --ref v0.1.1
+paseo plugin add git:sunnypsk/paseo-conversation-manager --ref main
 ```
+
+The `main` branch includes the updated compatibility range. The published `v0.1.1` tag still declares `<0.12.0`.
 
 Open **Manage conversations** in the sidebar or Command Center. No API keys, accounts or additional runtime dependencies are required. Paseo supplies the plugin's host libraries, so no preparation command is needed.
 

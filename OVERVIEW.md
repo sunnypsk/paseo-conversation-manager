@@ -10,4 +10,4 @@ Running conversations, pending input, pinned items, archives already in progress
 
 Each conversation represents a sidebar workspace, including its agents and terminals. Eligibility is checked again before archiving. Results show archived, skipped and failed items individually. Recent run history is kept in memory and clears when the plugin reloads; preferences persist. The public SDK does not provide a direct undo operation.
 
-Requires Paseo app and daemon 0.11.4 or a compatible 0.11.x release. Supports desktop and compact layouts. The plugin uses only the selected host's Paseo data and archive API. No third-party services, API keys or LLM calls are required.
+Requires Paseo app and daemon 0.11.4 or later. Compatibility has been checked on 0.11.4 and 0.12.0. Supports desktop and compact layouts. The plugin uses only the selected host's Paseo data and archive API. No third-party services, API keys or LLM calls are required.
